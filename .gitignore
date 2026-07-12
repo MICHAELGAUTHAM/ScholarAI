@@ -1,0 +1,40 @@
+# Environments
+.env
+.env.local
+.env.*.local
+
+# Python
+backend/venv/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/app/routers/__pycache__/
+backend/app/ai/__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Databases
+backend/scholarai.db
+
+# User Uploads
+backend/uploads/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS & Editor
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

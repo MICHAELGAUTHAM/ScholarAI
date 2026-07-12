@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database Container
+  db:
+    image: postgres:15-alpine
+    container_name: scholarai_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: scholarai_secure_password_99
+      POSTGRES_DB: scholarai
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # FastAPI Backend API Server
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: scholarai_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=production
+      - DATABASE_URL=postgresql://postgres:scholarai_secure_password_99@db:5432/scholarai
+      - SECRET_KEY=scholarai_super_secret_key_change_me_in_production_1234567890
+      - UPLOAD_DIR=/backend/uploads
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./backend/uploads:/backend/uploads
+    depends_on:
+      - db
+
+  # React Frontend Server
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: scholarai_frontend
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

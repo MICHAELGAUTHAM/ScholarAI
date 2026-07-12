@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@100..900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #f4f6fa;
+  --color-primary-100: #e9edf5;
+  --color-primary-200: #ccd8eb;
+  --color-primary-300: #9fb6db;
+  --color-primary-400: #6b8fc5;
+  --color-primary-500: #476fae;
+  --color-primary-600: #355691;
+  --color-primary-700: #2c4677;
+  --color-primary-800: #273c64;
+  --color-primary-900: #233454;
+  --color-primary-950: #151e33;
+
+  --color-accent-50: #faf6f0;
+  --color-accent-100: #f3eade;
+  --color-accent-200: #e5d1bd;
+  --color-accent-300: #d3b295;
+  --color-accent-400: #be8f6d;
+  --color-accent-500: #ad7251;
+  --color-accent-600: #9d6044;
+  --color-accent-700: #834c37;
+  --color-accent-800: #6a3e30;
+  --color-accent-900: #563329;
+  --color-accent-950: #2e1914;
+
+  --font-sans: 'Outfit', 'Inter', sans-serif;
+  --font-serif: 'Lora', 'Merriweather', serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-slate-50 text-slate-900 transition-colors duration-300;
+  }
+  
+  body.dark {
+    @apply bg-slate-950 text-slate-50;
+  }
+}
+
+/* Custom premium scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full transition-colors duration-200;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-700;
+}
+
+/* Custom premium blur backgrounds (Glassmorphism) */
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-md border border-slate-200/50 shadow-xs;
+}
+
+.dark .glass-panel {
+  @apply bg-slate-900/70 backdrop-blur-md border border-slate-800/50 shadow-xs;
+}
+
+/* Micro-animations */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.01); }
+}
+
+.pulse-hover:hover {
+  animation: pulse-subtle 2s infinite ease-in-out;
+}
+
+/* Academic Serif font utility */
+.font-academic {
+  font-family: 'Lora', Georgia, serif;
+}
