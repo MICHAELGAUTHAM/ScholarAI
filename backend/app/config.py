@@ -22,10 +22,12 @@ class Settings(BaseSettings):
     )
     
     # File Storage
-    # If running on Vercel, redirect upload directory to /tmp
+    # On Vercel (Linux, read-only filesystem), redirect uploads to /tmp
+    # VERCEL env var is set to '1' on Vercel's servers
+    _on_vercel = os.getenv("VERCEL") == "1" or os.getenv("VERCEL_ENV") is not None
     UPLOAD_DIR: str = os.getenv(
-        "UPLOAD_DIR", 
-        "/tmp/uploads" if os.getenv("VERCEL") == "1" else "./uploads"
+        "UPLOAD_DIR",
+        "/tmp/uploads" if _on_vercel else "./uploads"
     )
     
     # AI Config
