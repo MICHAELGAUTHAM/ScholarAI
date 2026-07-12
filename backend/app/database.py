@@ -10,6 +10,12 @@ connect_args = {}
 pool_class = None
 database_url = settings.DATABASE_URL
 
+# Strip channel_binding param — psycopg2 on Vercel's runtime may not support it
+if "channel_binding" in database_url:
+    import re
+    database_url = re.sub(r'[&?]channel_binding=[^&]*', '', database_url)
+    database_url = re.sub(r'\?$|&$', '', database_url)
+
 if database_url.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
 else:

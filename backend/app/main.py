@@ -46,7 +46,12 @@ app.include_router(notes.router, prefix=settings.API_V1_STR)
 app.include_router(chat.router, prefix=settings.API_V1_STR)
 
 # Mount uploads directory to serve files (e.g. for pdf reading panel)
-app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
+# Wrap in try/except — on Vercel cold start the /tmp/uploads dir may not exist yet
+try:
+    os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
+    app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
+except Exception as e:
+    print(f"Warning: Could not mount uploads directory: {e}")
 
 @app.get("/")
 def read_root():
