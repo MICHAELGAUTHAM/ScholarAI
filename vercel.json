@@ -1,7 +1,14 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend && npm install && npm run build",
+  "framework": null,
+  "installCommand": "cd frontend && npm install",
+  "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/index.py": {
+      "runtime": "@vercel/python@latest"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -10,10 +17,6 @@
     {
       "source": "/uploads/(.*)",
       "destination": "/api/index.py"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/$1"
     }
   ]
 }
